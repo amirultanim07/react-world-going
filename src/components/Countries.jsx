@@ -4,8 +4,14 @@ import './countries.css'
 
 const Countries = ({ countriesPromise }) => {
     const [visitedCountries, setVisitedCountries] = useState([]);
+    const [visitedFlags, setVisitedFlags] = useState([]);
 
     const countries = use(countriesPromise);
+
+    const handleVisitedFlags = (flag) => {
+        const newVisitedFlags = [...visitedFlags, flag];
+        setVisitedFlags(newVisitedFlags);
+    }
 
     const handleVisitedCountries = (country) => {
         const newVisitedCountries = [...visitedCountries, country];
@@ -16,6 +22,11 @@ const Countries = ({ countriesPromise }) => {
         <div>
             <h1>Traveling Countries: {countries.length}</h1>
             <h3>Traveled So Far : {visitedCountries.length}</h3>
+            <div className='Visited-flags-container'>
+                {
+                    visitedFlags.map(flag => <img src={flag}></img>)
+                }
+            </div>
             <ol>
                 {
                     visitedCountries.map(country => <li>{country.name.common}</li>)
@@ -27,6 +38,7 @@ const Countries = ({ countriesPromise }) => {
                     countries.map(country => <Country
                         key={country.cca3}
                         handleVisitedCountries={handleVisitedCountries}
+                        handleVisitedFlags={handleVisitedFlags}
                         country={country}></Country>)
                 }
             </div>
